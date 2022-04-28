@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 // import the components we want to use
 //import MusicRater from './components/MusicRater'
 //import InitialScreen from './components/InitialScreen'
-import {FlatList, Text, View } from "react-native";
+import {Button, FlatList, Text, View } from "react-native";
 
 
 export default function App() {
@@ -12,9 +12,15 @@ export default function App() {
   // Initially, set data to an empty array and set up the setData function for
   // later changing the data value to the fetched data.
   const [data, setData] = useState([]);
-	//const [rating, setRating] = useState();
-	//const [username, setUsername] = useState();
-	//const [id, setId] = useState();
+  //const [rating, setRating] = useState();
+  //const [username, setUsername] = useState();
+  //const [id, setId] = useState();
+
+  const onRemove = id => e => {
+    setData(data.rating.filter(data => data.id !== id));
+  };
+
+	
 
   // The useEffect hook is similar to the componentDidMount and
   // componentDidUpdate in class components. For our anonymoust function, we will
@@ -68,9 +74,19 @@ export default function App() {
             data={data}
 			keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
-				<Text>{"User: " + item.username + "  -  Rating: " + item.rating + "  -  Song: " + item.song}</Text>
+				<View>
+					<Text>{"User: " + item.username + "  -  Rating: " + item.rating + "  -  Song: " + item.song}</Text>
+					<Button 
+					title='Delete' 
+					onPress={onRemove(item.id)}
+					/>
+				</View>
 				// add buttons for update/delete
 				// outside add an "add rating" 
+				// <Button 
+				// 	title='Delete' 
+				// 	onPress={onRemove(item.id)}
+				// />
             )}
           />
         </View>
