@@ -80,6 +80,11 @@ export default function App() {
 					title='Delete' 
 					onPress={onRemove(item.id)}
 					/>
+          <Button 
+					title='Edit' 
+          //change this, this is just a hold
+					onPress={func(item.id)}
+					/>
 				</View>
 				// add buttons for update/delete
 				// outside add an "add rating" 
@@ -88,6 +93,11 @@ export default function App() {
 				// 	onPress={onRemove(item.id)}
 				// />
             )}
+          />
+          <Button 
+          title='Add'
+          //change this, this is just a holder
+          onPress = {func()}
           />
         </View>
       )}
