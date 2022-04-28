@@ -1,4 +1,5 @@
 import React, { useEffect, useState} from "react";
+import axios from 'axios';
 // import the components we want to use
 //import MusicRater from './components/MusicRater'
 //import InitialScreen from './components/InitialScreen'
@@ -16,8 +17,25 @@ export default function App() {
   //const [username, setUsername] = useState();
   //const [id, setId] = useState();
 
-  const onRemove = id => e => {
-    setData(data.rating.filter(data => data.id !== id));
+  const refreshRatings = () => {
+	fetch("https://simplymusic.herokuapp.com/api/rating")
+	// Parse the response object and extract the json response that is obtained.
+	.then((response) => response.json())
+	// Set the empty data variable to the fetched data.
+	.then((json) => setData(json))
+	// Catch any errors thrown from the fetch call.
+	.catch((error) => console.error(error))
+	// While the data is loading, show the isLoading view below.
+	// Once setLoading() sets isLoading to false, show the view with the
+	// loaded data.
+	.finally(() => setLoading(false));
+  };
+
+
+  const onRemove2 = item => e => {
+	// Pass the URL to the delete API.
+    axios.delete(`https://simplymusic.herokuapp.com/api/rating/${item.id}/`)
+      .then((response) => refreshRatings())
   };
 
 	
@@ -78,12 +96,7 @@ export default function App() {
 					<Text>{"User: " + item.username + "  -  Rating: " + item.rating + "  -  Song: " + item.song}</Text>
 					<Button 
 					title='Delete' 
-					onPress={onRemove(item.id)}
-					/>
-          <Button 
-					title='Edit' 
-          //change this, this is just a hold
-					onPress={func(item.id)}
+					onPress={onRemove2(item)}
 					/>
 				</View>
 				// add buttons for update/delete
@@ -93,11 +106,6 @@ export default function App() {
 				// 	onPress={onRemove(item.id)}
 				// />
             )}
-          />
-          <Button 
-          title='Add'
-          //change this, this is just a holder
-          onPress = {func()}
           />
         </View>
       )}
