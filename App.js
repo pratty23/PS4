@@ -27,7 +27,6 @@ export default function App() {
 	//.finally(() => setLoading(false));
   };
 
-
   const onRemove2 = item => e => {
 	// Pass the URL to the delete API.
     axios.delete(`https://simplymusic.herokuapp.com/api/rating/${item.id}/`)
@@ -35,13 +34,15 @@ export default function App() {
   };
 
   const Update = item => e => {
+	console.log("item is:", item);
     axios.patch(`https://simplymusic.herokuapp.com/api/rating/${item.id}/`, item)
-      .then((response) => refreshRatings())
+    .then((response) => refreshRatings())
   };
 
   const onSubmit = (event) => {
 	event.preventDefault();
-	let r = {songId, username, song, rating}
+	let r = {username, song, rating}
+	console.log("item is:", r);
 	axios.post('https://simplymusic.herokuapp.com/api/rating/', r).then((response) => refreshRatings());
   };
 
@@ -96,12 +97,12 @@ export default function App() {
 					<TextInput
 					style={styles.input}
 					placeholder={'Enter New Rating'}
-					value={rating}
+					value={item.rating}
 					onChange= {(e) => setRating(e.target.value)}
 					/>
 					<Button 
 					title='Update' 
-					onPress={Update(item)}
+					onPress={Update({item})}
 					/>
 					
 				</View>
