@@ -3,7 +3,8 @@ import axios from 'axios';
 // import the components we want to use
 //import MusicRater from './components/MusicRater'
 //import InitialScreen from './components/InitialScreen'
-import {Button, FlatList, Text, View } from "react-native";
+import {Button, FlatList, Text, View, TextInput} from "react-native";
+import { styles } from "./styles";
 
 
 export default function App() {
@@ -13,22 +14,17 @@ export default function App() {
   // Initially, set data to an empty array and set up the setData function for
   // later changing the data value to the fetched data.
   const [data, setData] = useState([]);
-  //const [rating, setRating] = useState();
-  //const [username, setUsername] = useState();
-  //const [id, setId] = useState();
+  const [username, setUsername] = useState("");
+  const [rating, setRating] = useState("");
+  const [song, setSong] = useState("");
+  const [songId, setSongId] = useState(null);
 
   const refreshRatings = () => {
 	fetch("https://simplymusic.herokuapp.com/api/rating")
-	// Parse the response object and extract the json response that is obtained.
 	.then((response) => response.json())
-	// Set the empty data variable to the fetched data.
 	.then((json) => setData(json))
-	// Catch any errors thrown from the fetch call.
 	.catch((error) => console.error(error))
-	// While the data is loading, show the isLoading view below.
-	// Once setLoading() sets isLoading to false, show the view with the
-	// loaded data.
-	.finally(() => setLoading(false));
+	//.finally(() => setLoading(false));
   };
 
 
@@ -38,25 +34,24 @@ export default function App() {
       .then((response) => refreshRatings())
   };
 
-	
+  const Update = item => e => {
+    axios.patch(`https://simplymusic.herokuapp.com/api/rating/${item.id}/`, item)
+      .then((response) => refreshRatings())
+  };
+
+  const onSubmit = (event) => {
+	event.preventDefault();
+	let r = {songId, username, song, rating}
+	axios.post('https://simplymusic.herokuapp.com/api/rating/', r).then((response) => refreshRatings());
+  };
+
 
   // The useEffect hook is similar to the componentDidMount and
-  // componentDidUpdate in class components. For our anonymoust function, we will
-  // have one parameter, fetch(), and an empty function body.
-  // Note that items in a Django database can be retrieved that way as well.
-  // Try it out with Postman.
   useEffect(() => {
-    // Pass the URL to the fetch API.
     fetch("https://simplymusic.herokuapp.com/api/rating")
-      // Parse the response object and extract the json response that is obtained.
       .then((response) => response.json())
-      // Set the empty data variable to the fetched data.
       .then((json) => setData(json))
-      // Catch any errors thrown from the fetch call.
       .catch((error) => console.error(error))
-      // While the data is loading, show the isLoading view below.
-      // Once setLoading() sets isLoading to false, show the view with the
-      // loaded data.
       .finally(() => setLoading(false));
 
   }, []);
@@ -86,7 +81,7 @@ export default function App() {
               paddingBottom: 10,
             }}
           >
-            Ratings
+            MusicRater Ratings
           </Text>
           <FlatList
             data={data}
@@ -98,16 +93,57 @@ export default function App() {
 					title='Delete' 
 					onPress={onRemove2(item)}
 					/>
+					<TextInput
+					style={styles.input}
+					placeholder={'Enter New Rating'}
+					value={rating}
+					onChange= {(e) => setRating(e.target.value)}
+					/>
+					<Button 
+					title='Update' 
+					onPress={Update(item)}
+					/>
+					
 				</View>
-				// add buttons for update/delete
-				// outside add an "add rating" 
-				// <Button 
-				// 	title='Delete' 
-				// 	onPress={onRemove(item.id)}
-				// />
             )}
           />
+		  
+
+		  {/* This is the view for adding a rating to the DB */}
+		  <View>
+		  	<TextInput
+				style={styles.input}
+				placeholder={'Username'}
+				value={username}
+				onChange= {(e) => setUsername(e.target.value)}
+				/>
+			
+			<TextInput
+				style={styles.input}
+				placeholder={'Song'}
+				value={song}
+				onChange= {(e) => setSong(e.target.value)}
+				/>
+
+			<TextInput
+				style={styles.input}
+				placeholder={'Rating'}
+				value={rating}
+				onChange= {(e) => setRating(e.target.value)}
+				/>
+
+			<Button 
+				title='Add Rating' 
+				onPress={onSubmit}
+			/>
+
+		  </View>
+
+
         </View>
+
+
+
       )}
     </View>
   );
