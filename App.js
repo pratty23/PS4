@@ -109,17 +109,16 @@ export default function App() {
           >
             MusicRater Ratings
           </Text>
-          <FlatList
+          <FlatList style={styles.list}
             data={data}
 			keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
 				<View>
 					<Text>{"User: " + item.username + "  -  Rating: " + item.rating + "  -  Song: " + item.song}</Text>
-					{/* style={styles.button} */}
 					<Button 
 					title='Delete' 
 					onPress={onRemove2(item)}
-					/>
+					color="#841584"/>
 					<TextInput
 					style={styles.input}
 					placeholder={'Enter New Rating 1-5'}
@@ -143,7 +142,7 @@ export default function App() {
 		  
 
 		  {/* This is the view for adding a rating to the DB */}
-		  <View>
+		  <View style={styles.list2}>
 		  	<TextInput
 				style={styles.input}
 				placeholder={'Username'}
@@ -162,16 +161,16 @@ export default function App() {
 
 			<TextInput
 				style={styles.input}
-				placeholder={'Rating'}
+				placeholder={'Rating 1-5'}
 				value={rating}
 				//onChange= {(e) => setRating(e.target.value)}
 				onChangeText={(value) => setRating(value)}
 				
 				/>
-      <Text style={styles.instructions}>
-        Please only rank every song once (per user). Enter a ranking between 1 and 5. 
-      </Text>  
-			<Button 
+			<Text style={styles.instructions}>
+        	Please only rank every song once (per user). Enter a ranking between 1 and 5. 
+      		</Text> 
+			<Button
 				title='Add Rating 1-5' 
 				onPress={onSubmit}
 			/>
