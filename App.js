@@ -18,9 +18,10 @@ export default function App() {
   const [rating, setRating] = useState("");
   const [song, setSong] = useState("");
   const [songId, setSongId] = useState(null);
+  const [ratingsDict, setRatingsDict] = useState({});
 
   const refreshRatings = () => {
-	fetch("https://simplymusic.herokuapp.com/api/rating")
+	fetch("https://simplymusic.herokuapp.com/rating")
 	.then((response) => response.json())
 	.then((json) => setData(json))
 	.catch((error) => console.error(error))
@@ -29,13 +30,27 @@ export default function App() {
 
   const onRemove2 = item => e => {
 	// Pass the URL to the delete API.
-    axios.delete(`https://simplymusic.herokuapp.com/api/rating/${item.id}/`)
+    axios.delete(`https://simplymusic.herokuapp.com/rating/${item.id}/`)
       .then((response) => refreshRatings())
   };
 
-  const Update = item => e => {
+  const Update = (item) => e => {
 	console.log("item is:", item);
-    axios.patch(`https://simplymusic.herokuapp.com/api/rating/${item.id}/`, item)
+    axios.patch(`https://simplymusic.herokuapp.com/rating/${item.id}/`, item)
+    .then((response) => refreshRatings())
+  };
+
+  const Update2 = (id) => e => {
+	let r = ratingsDict['rating'];
+	let i = id['id']
+	let new_rat = {i, username, song, r} 
+	
+	console.log("rating: ", ratingsDict['rating']);
+	console.log("id: ", id['id']);
+	console.log("r", r)
+	console.log("new rating", new_rat)
+
+    axios.patch(`https://simplymusic.herokuapp.com/rating/${i}/`, new_rat)
     .then((response) => refreshRatings())
   };
 
@@ -43,13 +58,13 @@ export default function App() {
 	event.preventDefault();
 	let r = {username, song, rating}
 	console.log("item is:", r);
-	axios.post('https://simplymusic.herokuapp.com/api/rating/', r).then((response) => refreshRatings());
+	axios.post('https://simplymusic.herokuapp.com/rating/', r).then((response) => refreshRatings());
   };
 
 
   // The useEffect hook is similar to the componentDidMount and
   useEffect(() => {
-    fetch("https://simplymusic.herokuapp.com/api/rating")
+    fetch("https://simplymusic.herokuapp.com/rating")
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error))
@@ -90,6 +105,7 @@ export default function App() {
             renderItem={({ item }) => (
 				<View>
 					<Text>{"User: " + item.username + "  -  Rating: " + item.rating + "  -  Song: " + item.song}</Text>
+					{/* style={styles.button} */}
 					<Button 
 					title='Delete' 
 					onPress={onRemove2(item)}
@@ -97,12 +113,18 @@ export default function App() {
 					<TextInput
 					style={styles.input}
 					placeholder={'Enter New Rating'}
-					value={item.rating}
-					onChange= {(e) => setRating(e.target.value)}
+					//value={item.rating}
+					//onChange= {(e) => setRating(e.target.value)}
+					value = {ratingsDict[item.id]}
+					//onChangeText={(e) =>{setRatingsDict({rating: value})}}
+					onChangeText={(value) => setRatingsDict({rating: value})}
+					// value = {ratingsDict[item.id]}
+                    // onChange= {(e) =>{var id = item.id; setRatingsDict({ rating: e.target.value})}}
 					/>
 					<Button 
 					title='Update' 
-					onPress={Update({item})}
+					onPress={Update2(ratingsDict,item.id)}
+					// onPress={Update({value})}
 					/>
 					
 				</View>
@@ -116,21 +138,25 @@ export default function App() {
 				style={styles.input}
 				placeholder={'Username'}
 				value={username}
-				onChange= {(e) => setUsername(e.target.value)}
+				onChangeText={(value) => setUsername(value)}
+				//onChange= {(e) => setUsername(e.target.value)}
 				/>
 			
 			<TextInput
 				style={styles.input}
 				placeholder={'Song'}
 				value={song}
-				onChange= {(e) => setSong(e.target.value)}
+				//onChange= {(e) => setSong(e.target.value)}
+				onChangeText={(value) => setSong(value)}
 				/>
 
 			<TextInput
 				style={styles.input}
 				placeholder={'Rating'}
 				value={rating}
-				onChange= {(e) => setRating(e.target.value)}
+				//onChange= {(e) => setRating(e.target.value)}
+				onChangeText={(value) => setRating(value)}
+				
 				/>
 
 			<Button 
