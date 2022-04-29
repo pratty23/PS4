@@ -51,4 +51,8 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
+<<<<<<< HEAD
 })
+=======
+})
+>>>>>>> a985a67ceb71e654be289dc5de67cd6b9d77ec49
