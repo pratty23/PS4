@@ -6,7 +6,7 @@ Problem 1.)
 
 https://simplymusic.herokuapp.com
 
-Our Django backend has been deployed through Heroku and has been populated using an intial fixture file so that there are already several users, ratings, and artist bios.
+Our Django backend has been deployed through Heroku and has been populated using an intial fixture file so that there are already several users, ratings, and artist bios.  Improving on the areas in which we lost points for HW3, we were able to use validators to make sure ratings can only be 0-5 and years for album release dates 1800-2022.
 
 https://simply-music.web.app
 
