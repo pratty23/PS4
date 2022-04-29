@@ -40,17 +40,27 @@ export default function App() {
     .then((response) => refreshRatings())
   };
 
-  const Update2 = (id) => e => {
+  const Update2 = (item) => e => {
 	let r = ratingsDict['rating'];
-	let i = id['id']
-	let new_rat = {i, username, song, r} 
-	
-	console.log("rating: ", ratingsDict['rating']);
-	console.log("id: ", id['id']);
-	console.log("r", r)
-	console.log("new rating", new_rat)
+	// let i = id['id']
+	// let new_rat = {i, username, song, r} 
+	console.log("new rating: ", ratingsDict['rating']);
+	// console.log("id: ", id['id']);
+	// console.log("r", r)
+	// console.log("new rating", new_rat)
+	let the_id = item.id
+	let usn = item.username
+	let sg = item.song
+	console.log(item)
+	//console.log(item.id)
+	//console.log(item.username)
+	//console.log(item.song)
+	item['rating'] = r;
+	console.log(item)
 
-    axios.patch(`https://simplymusic.herokuapp.com/rating/${i}/`, new_rat)
+	//let new_rating = {the_id, usn, sg, r}
+
+    axios.patch(`https://simplymusic.herokuapp.com/rating/${item.id}/`, item)
     .then((response) => refreshRatings())
   };
 
@@ -123,7 +133,7 @@ export default function App() {
 					/>
 					<Button 
 					title='Update' 
-					onPress={Update2(ratingsDict,item.id)}
+					onPress={Update2(item)}
 					// onPress={Update({value})}
 					/>
 					
