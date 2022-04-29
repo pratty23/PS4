@@ -122,7 +122,7 @@ export default function App() {
 					/>
 					<TextInput
 					style={styles.input}
-					placeholder={'Enter New Rating'}
+					placeholder={'Enter New Rating 1-5'}
 					//value={item.rating}
 					//onChange= {(e) => setRating(e.target.value)}
 					value = {ratingsDict[item.id]}
@@ -170,7 +170,7 @@ export default function App() {
 				/>
 
 			<Button 
-				title='Add Rating' 
+				title='Add Rating 1-5' 
 				onPress={onSubmit}
 			/>
 
