@@ -168,7 +168,9 @@ export default function App() {
 				onChangeText={(value) => setRating(value)}
 				
 				/>
-
+      <Text style={styles.instructions}>
+        Please only rank every song once (per user). Enter a ranking between 1 and 5. 
+      </Text>  
 			<Button 
 				title='Add Rating 1-5' 
 				onPress={onSubmit}
