@@ -14,4 +14,17 @@ Our React frontend has been deployed through Firebase, but despite countless hou
 
 Problem 2.)
 
-This is the frontend of the mobile Music app. 
+In the Django backend directory:
+
+source my-venv/bin/activate
+
+python manage.py makemigrations
+
+python3 manage.py migrate
+
+python3 manage.py loaddata initial.json
+
+python3 manage.py runserver
+
+In the the React Native frontend directory:
+
