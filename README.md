@@ -31,7 +31,7 @@ In the the React Native frontend directory:
 
 
 Running the React Native App
-In the terminal cd into the PS$_frontend folder
+In the terminal cd into the PS4_frontend folder
 Once inside run npm start to run the react app
 Then select the ios veriosn with i
 From there you will be able to view the app on the phone
