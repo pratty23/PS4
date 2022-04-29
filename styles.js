@@ -8,6 +8,14 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  list: {
+    backgroundColor: '#689',
+    borderColor: '#0000',
+  },
+  list2: {
+    backgroundColor: '#669',
+    borderColor: '#0000',
+  },
   logo: {
     width: 305,
     height: 159,
@@ -21,16 +29,26 @@ export const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: 'blue',
-    padding: 20,
-    borderRadius: 5,
+    padding: 10,
+    borderRadius: 3,
+    color: 'red',
+    backgroundColor: "blue",
+    color: "red",
+    textAlign: "center",
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 10,
     color: '#fff',
   },
   thumbnail: {
     width: 300,
     height: 300,
     resizeMode: 'contain',
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
   },
 })
